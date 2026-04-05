@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Anime & Manga Tracker</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Left Side - Branding Section -->
+        <div class="login-branding">
+            <div class="branding-content">
+                <div class="logo">
+                    <i class="fas fa-film"></i>
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h1>Anime & Manga Tracker</h1>
+                <p>Track your anime, manga, series, manwha, and manhua all in one place</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Track watching progress</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-star"></i>
+                        <span>Save your favorites</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Create wishlist</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View statistics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-form-container">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to continue your tracking journey</p>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <!-- Step 1: Input Mode Selection & Identifier -->
+                    <div class="form-step" id="step1">
+                        <!-- Mode Selection Toggle -->
+                        <div class="mode-toggle">
+                            <button type="button" class="mode-btn active" data-mode="email">
+                                <i class="fas fa-envelope"></i> Email
+                            </button>
+                            <button type="button" class="mode-btn" data-mode="phone">
+                                <i class="fas fa-phone-alt"></i> Phone Number
+                            </button>
+                        </div>
+
+                        <!-- Email Input Field -->
+                        <div class="input-field email-field" id="emailField">
+                            <div class="form-group">
+                                <label for="emailInput">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address
+                                </label>
+                                <input type="email" id="emailInput" 
+                                       placeholder="example@gmail.com"
+                                       autocomplete="off">
+                                <div class="input-error" id="emailError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Phone Input Field (with country code) -->
+                        <div class="input-field phone-field" id="phoneField" style="display: none;">
+                            <div class="form-group">
+                                <label for="countryCode">
+                                    <i class="fas fa-globe"></i>
+                                    Country Code
+                                </label>
+                                <select id="countryCode" class="country-select">
+                                    <option value="+91">🇮🇳 IND (+91)</option>
+                                    <option value="+1">🇺🇸 USA (+1)</option>
+                                    <option value="+44">🇬🇧 UK (+44)</option>
+                                    <option value="+61">🇦🇺 AUS (+61)</option>
+                                    <option value="+1">🇨🇦 CAN (+1)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneInput">
+                                    <i class="fas fa-phone"></i>
+                                    Phone Number
+                                </label>
+                                <div class="phone-input-wrapper">
+                                    <span class="country-code-display" id="countryCodeDisplay">+91</span>
+                                    <input type="tel" id="phoneInput" 
+                                           placeholder="9876543210"
+                                           maxlength="10"
+                                           autocomplete="off">
+                                </div>
+                                <div class="input-error" id="phoneError"></div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-next" id="nextBtn">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Username & Terms -->
+                    <div class="form-step" id="step2" style="display: none;">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i>
+                                Username
+                            </label>
+                            <input type="text" id="username" 
+                                   placeholder="Choose a username"
+                                   maxlength="30"
+                                   autocomplete="off">
+                            <div class="input-hint">First letter of each word will be capitalized automatically</div>
+                            <div class="input-error" id="usernameError"></div>
+                        </div>
+
+                        <div class="terms-section">
+                            <div class="terms-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="termsCheckbox">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        I agree to the <a href="#" id="termsLink">Terms of Service</a>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="terms-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="privacyCheckbox">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        I agree to the <a href="#" id="privacyLink">Privacy Policy</a>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="terms-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="updatesCheckbox">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        I want to receive updates and recommendations
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-back" id="backBtn">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn-submit" id="submitBtn">
+                                Get Started <i class="fas fa-rocket"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Loading Animation Overlay -->
+                <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                    <div class="loading-card">
+                        <div class="loading-icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                        <h3>Setting up your account</h3>
+                        <p>Please wait while we prepare your tracker...</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-percentage" id="progressPercentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms Modal -->
+                <div class="modal" id="termsModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Terms of Service</h3>
+                            <button class="close-modal" id="closeTermsModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="terms-content">
+                                <h4>1. Acceptance of Terms</h4>
+                                <p>By using Anime & Manga Tracker, you agree to these terms. If you don't agree, please don't use our service.</p>
+                                
+                                <h4>2. User Data</h4>
+                                <p>Your data is stored locally on your device. We don't collect or store any personal information on our servers.</p>
+                                
+                                <h4>3. User Responsibilities</h4>
+                                <p>You are responsible for maintaining the security of your data. We recommend regular backups using the export feature.</p>
+                                
+                                <h4>4. Content Usage</h4>
+                                <p>This app is for personal tracking purposes only. All anime, manga, and series content belongs to their respective owners.</p>
+                                
+                                <h4>5. Changes to Terms</h4>
+                                <p>We may update these terms from time to time. Continued use of the app constitutes acceptance of the updated terms.</p>
+                                
+                                <h4>6. Contact</h4>
+                                <p>For any questions, please contact us through the app's support feature.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-primary" id="acceptTermsBtn">I Understand</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Modal -->
+                <div class="modal" id="privacyModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Privacy Policy</h3>
+                            <button class="close-modal" id="closePrivacyModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="privacy-content">
+                                <h4>1. Data Storage</h4>
+                                <p>All your data is stored locally in your browser's localStorage. No data is sent to any external servers.</p>
+                                
+                                <h4>2. Information We Don't Collect</h4>
+                                <p>We don't collect any personal information, email addresses, phone numbers, or tracking data.</p>
+                                
+                                <h4>3. Third-Party Services</h4>
+                                <p>We use Font Awesome for icons and UI Avatars for profile pictures. These services may collect anonymized usage data.</p>
+                                
+                                <h4>4. Data Export & Deletion</h4>
+                                <p>You can export your data anytime using the Export feature. To delete all data, use the Clear Data option in settings.</p>
+                                
+                                <h4>5. Cookies & Local Storage</h4>
+                                <p>We only use localStorage to save your preferences and tracking data. No tracking cookies are used.</p>
+                                
+                                <h4>6. Your Rights</h4>
+                                <p>You have full control over your data. You can view, edit, export, or delete it at any time.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-primary" id="acceptPrivacyBtn">I Understand</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Info -->
+                <div class="demo-info">
+                    <p><i class="fas fa-info-circle"></i> Demo: Enter any email/phone and username to get started</p>
+                    <p class="demo-hint">All data is stored locally on your device</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+<script src="storage.js"></script>
+
+</body>
+</html>

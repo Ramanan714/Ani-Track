@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Panel - Anime & Manga Tracker</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="header-title">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Admin Control Panel</h1>
+            </div>
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </header>
+
+        <main class="admin-main">
+            <!-- Stats Dashboard - Clickable -->
+            <div class="stats-dashboard">
+                <div class="stat-card clickable" data-stat="users" id="statUsersCard">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalUsers">0</span>
+                        <span class="stat-label">Total Users</span>
+                    </div>
+                    <i class="fas fa-chevron-right stat-arrow"></i>
+                </div>
+                <div class="stat-card clickable" data-stat="items" id="statItemsCard">
+                    <div class="stat-icon"><i class="fas fa-film"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalItems">0</span>
+                        <span class="stat-label">Total Items</span>
+                    </div>
+                    <i class="fas fa-chevron-right stat-arrow"></i>
+                </div>
+                <div class="stat-card clickable" data-stat="categories" id="statCategoriesCard">
+                    <div class="stat-icon"><i class="fas fa-tags"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalCategories">0</span>
+                        <span class="stat-label">Total Categories</span>
+                    </div>
+                    <i class="fas fa-chevron-right stat-arrow"></i>
+                </div>
+            </div>
+
+            <!-- Storage Usage Bar -->
+            <div class="storage-section">
+                <div class="storage-header">
+                    <h3><i class="fas fa-database"></i> Total Storage Usage</h3>
+                    <span class="storage-total" id="storageTotal">0 MB</span>
+                </div>
+                <div class="storage-bar-container" id="storageBarContainer">
+                    <div class="storage-bar-fill" id="storageBarFill"></div>
+                    <div class="storage-bar-overlay"><span class="storage-percentage" id="storagePercentage">0%</span></div>
+                </div>
+                <p class="storage-hint">Click on the bar to view detailed storage breakdown</p>
+            </div>
+
+            <!-- Users List Section -->
+            <div class="users-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Registered Users</h2>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchUsers" placeholder="Search users...">
+                    </div>
+                </div>
+                <div class="users-list" id="usersContainer"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Right Side Settings Drawer -->
+    <div class="settings-drawer" id="settingsDrawer">
+        <div class="drawer-overlay" id="drawerOverlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3><i class="fas fa-cog"></i> Admin Settings</h3>
+                <button class="close-drawer" id="closeDrawer"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div class="settings-section">
+                    <h4><i class="fas fa-palette"></i> Appearance</h4>
+                    <div class="setting-item">
+                        <label>Theme Mode</label>
+                        <select id="themeSelect" class="setting-select">
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode</option>
+                            <option value="system">System Default</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-database"></i> Data Management</h4>
+                    <div class="setting-item">
+                        <button id="exportAllDataBtn" class="btn btn-primary btn-block"><i class="fas fa-download"></i> Export All Users Data</button>
+                    </div>
+                    <div class="setting-item">
+                        <button id="importDataBtn" class="btn btn-secondary btn-block"><i class="fas fa-upload"></i> Import Data</button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    </div>
+                    <div class="setting-item">
+                        <button id="resetAllDataBtn" class="btn btn-danger btn-block"><i class="fas fa-trash-alt"></i> Delete All Users & Data</button>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-info-circle"></i> System Information</h4>
+                    <div class="info-item"><span class="info-label">Last Export:</span><span class="info-value" id="lastExportInfo">Never</span></div>
+                    <div class="info-item"><span class="info-label">Storage Used:</span><span class="info-value" id="storageUsedInfo">Calculating...</span></div>
+                    <div class="info-item"><span class="info-label">Storage Limit:</span><span class="info-value" id="storageLimitInfo">25 MB</span></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-user-shield"></i> Admin Actions</h4>
+                    <div class="setting-item">
+                        <button id="adminLogoutBtn" class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Popup Modal -->
+    <div class="modal" id="usersPopupModal">
+        <div class="modal-content popup-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-users"></i> All Users</h3>
+                <button class="close-modal" id="closeUsersPopup"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="usersPopupList"></div>
+        </div>
+    </div>
+
+    <!-- Items Popup Modal -->
+    <div class="modal" id="itemsPopupModal">
+        <div class="modal-content popup-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-film"></i> All Items</h3>
+                <button class="close-modal" id="closeItemsPopup"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="usersPopupFilters" style="display: none;" class="popup-filters">
+    <div class="filter-group">
+        <div class="filter-label">Filter by Username</div>
+        <div class="capsule-container" id="usersPopupUserFilter"></div>
+    </div>
+</div>
+
+<div id="itemsPopupFilters" style="display: none;" class="popup-filters">
+    <div class="filter-group">
+        <div class="filter-label">Filter by Category</div>
+        <div class="capsule-container" id="itemsPopupCategoryFilter"></div>
+    </div>
+    <div class="filter-group">
+        <div class="filter-label">Filter by Username</div>
+        <div class="capsule-container" id="itemsPopupUserFilter"></div>
+    </div>
+    <button class="clear-filters-btn" id="clearItemsPopupFilters">Clear All Filters</button>
+</div>
+            <div class="modal-body" id="itemsPopupList"></div>
+        </div>
+    </div>
+
+    <!-- Categories Popup Modal -->
+    <div class="modal" id="categoriesPopupModal">
+        <div class="modal-content popup-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-tags"></i> All Categories</h3>
+                <button class="close-modal" id="closeCategoriesPopup"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-filters" id="categoriesPopupFiltersContainer">
+            <div class="filter-group">
+                <div class="filter-label">Filter by Username</div>
+                <div class="capsule-container" id="categoriesPopupUserFilter"></div>
+            </div>
+            <button class="clear-filters-btn" id="clearCategoriesPopupFilters">
+                <i class="fas fa-times"></i> Clear All Filters
+            </button>
+        </div>
+            
+            <div class="modal-body" id="categoriesPopupList"></div>
+        </div>
+    </div>
+
+    <!-- Activity Stats Popup Modal -->
+    <div class="modal" id="activityPopupModal">
+        <div class="modal-content popup-modal">
+            <div class="modal-header">
+                <h3 id="activityPopupTitle">Activity Items</h3>
+                <button class="close-modal" id="closeActivityPopup"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="activityPopupList"></div>
+        </div>
+    </div>
+
+    <!-- Storage Details Modal -->
+    <div class="modal" id="storageModal">
+        <div class="modal-content storage-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-chart-pie"></i> Storage Breakdown by User</h3>
+                <button class="close-modal" id="closeStorageModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="storage-summary">
+                    <div class="summary-item"><span class="summary-label">Total Storage:</span><span class="summary-value" id="modalTotalStorage">0 MB</span></div>
+                    <div class="summary-item"><span class="summary-label">Total Users:</span><span class="summary-value" id="modalTotalUsers">0</span></div>
+                </div>
+                <div class="user-storage-list" id="userStorageList"></div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" id="closeStorageModalBtn">Close</button></div>
+        </div>
+    </div>
+
+    <div class="categories-section">
+    <div class="section-header">
+        <h2><i class="fas fa-tags"></i> All Categories (All Users)</h2>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchAllCategories" placeholder="Search categories...">
+        </div>
+    </div>
+    <div class="all-categories-container" id="allCategoriesContainer">
+        <!-- All categories will be loaded here -->
+    </div>
+</div>
+
+    <!-- User Details Modal -->
+    <div class="modal" id="userDetailsModal">
+        <div class="modal-content user-details-modal">
+            <div class="modal-header">
+                <h3 id="userModalTitle">User Details</h3>
+                <button class="close-modal" id="closeUserModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="details-section"><h4><i class="fas fa-user-circle"></i> User Information</h4><div class="info-grid" id="userInfoGrid"></div></div>
+                <div class="details-section">
+                    <h4><i class="fas fa-chart-bar"></i> Activity Statistics</h4>
+                    <div class="activity-stats-grid" id="userStatsGrid"></div>
+                </div>
+                <div class="details-section">
+                    <div class="selection-controls-bar">
+                        <button class="control-btn select-all-items-btn" id="selectAllUserItems"><i class="fas fa-check-double"></i> Select All</button>
+                        <button class="control-btn deselect-all-items-btn" id="deselectAllUserItems"><i class="fas fa-times"></i> Deselect All</button>
+                        <button class="control-btn clear-selection-btn" id="clearUserItemsSelection"><i class="fas fa-eraser"></i> Clear</button>
+                        <button class="control-btn delete-selected-btn" id="deleteSelectedUserItems"><i class="fas fa-trash"></i> Delete Selected</button>
+                        <span class="selection-count" id="userItemsSelectionCount">0 selected</span>
+                    </div>
+                    <h4><i class="fas fa-list"></i> User's Items</h4>
+                    <div class="items-list" id="userItemsList"></div>
+                </div>
+                <div class="details-section"><h4><i class="fas fa-tags"></i> User's Categories</h4><div class="categories-list" id="userCategoriesList"></div></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="deleteUserBtn"><i class="fas fa-user-slash"></i> Delete User Account</button>
+                <button class="btn btn-secondary" id="closeUserModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-header"><h3>Confirm Action</h3><button class="close-modal" id="closeConfirmModal"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body"><p id="confirmMessage">Are you sure you want to perform this action?</p></div>
+            <div class="modal-footer"><button class="btn btn-danger" id="confirmActionBtn">Confirm</button><button class="btn btn-secondary" id="cancelConfirmBtn">Cancel</button></div>
+        </div>
+    </div>
+
+    <script src="theme.js"></script>
+    <script src="storage.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

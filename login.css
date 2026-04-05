@@ -1,0 +1,784 @@
+/* Login Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.login-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Left Side - Branding Section */
+.login-branding {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.95), rgba(46, 204, 113, 0.95));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-branding::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveBackground 20s linear infinite;
+}
+
+@keyframes moveBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+.branding-content {
+    max-width: 500px;
+    z-index: 1;
+    animation: fadeInUp 0.8s ease;
+}
+
+.logo {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.logo i {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.branding-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.branding-content p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.feature i {
+    font-size: 1.1rem;
+}
+
+/* Right Side - Login Form */
+.login-form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-color);
+    padding: 20px;
+}
+
+.form-wrapper {
+    max-width: 450px;
+    width: 100%;
+    background: var(--card-background);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-header h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Form Steps */
+.form-step {
+    transition: all 0.3s ease;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group input.error {
+    border-color: #e74c3c;
+}
+
+.input-hint {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.input-error {
+    font-size: 0.8rem;
+    color: #e74c3c;
+    margin-top: 5px;
+    display: none;
+}
+
+.input-error.show {
+    display: block;
+}
+
+/* Terms Section */
+.terms-section {
+    margin: 25px 0;
+}
+
+.terms-item {
+    margin-bottom: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+    color: var(--text-color);
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: var(--background-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    border-color: var(--primary-color);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-text {
+    line-height: 1.4;
+}
+
+.checkbox-text a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.checkbox-text a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn-next, .btn-back, .btn-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-next {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-back {
+    background: var(--card-background);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+}
+
+.btn-back:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--secondary-color), #27ae60);
+    color: white;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--card-background);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.close-modal:hover {
+    background: var(--border-color);
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.terms-content, .privacy-content {
+    line-height: 1.6;
+}
+
+.terms-content h4, .privacy-content h4 {
+    color: var(--primary-color);
+    margin: 20px 0 10px 0;
+    font-size: 1.1rem;
+}
+
+.terms-content p, .privacy-content p {
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-footer .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-footer .btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Demo Info */
+.demo-info {
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(var(--primary-color-rgb), 0.05);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.demo-info p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.demo-info p:first-child {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.demo-info i {
+    margin-right: 5px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .login-branding {
+        padding: 40px 20px;
+        min-height: 400px;
+    }
+    
+    .branding-content {
+        text-align: center;
+    }
+    
+    .logo {
+        justify-content: center;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+    
+    .login-form-container {
+        padding: 20px;
+    }
+    
+    .form-wrapper {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .modal-content {
+        margin: 10px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .btn-next, .btn-back, .btn-submit {
+        min-height: 48px;
+    }
+    
+    .checkbox-container {
+        min-height: 44px;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.btn-submit.loading {
+    pointer-events: none;
+    animation: pulse 1s ease-in-out infinite;
+}
+/* Add these new styles to existing login.css */
+
+/* Mode Toggle Buttons */
+.mode-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: var(--card-background);
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 40px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mode-btn i {
+    font-size: 1rem;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Phone Input Wrapper */
+.phone-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--background-color);
+    transition: all 0.3s;
+}
+
+.phone-input-wrapper:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.country-code-display {
+    padding: 14px 0 14px 16px;
+    background: rgba(var(--primary-color-rgb), 0.05);
+    border-right: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 70px;
+}
+
+.phone-input-wrapper input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 14px 16px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.phone-input-wrapper input:focus {
+    outline: none;
+}
+
+/* Country Select Dropdown */
+.country-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.country-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-card {
+    background: var(--card-background);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: fadeInUp 0.5s ease;
+}
+
+.loading-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.loading-icon i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.loading-card p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.progress-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    width: 0%;
+    transition: width 0.1s linear;
+    border-radius: 4px;
+}
+
+.progress-percentage {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Input Field Transitions */
+.input-field {
+    transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .mode-btn {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+    
+    .mode-btn i {
+        font-size: 0.9rem;
+    }
+    
+    .phone-input-wrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .country-code-display {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 12px 16px;
+        text-align: center;
+    }
+    
+    .loading-card {
+        padding: 30px 20px;
+    }
+}

@@ -1,0 +1,763 @@
+/* Add Page Specific Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    backdrop-filter: blur(3px);
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* Side Panels (Same as index) */
+.side-panel {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 280px;
+    background: var(--card-background);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.menu-panel {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.menu-panel.active {
+    transform: translateX(0);
+}
+
+.settings-panel {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.settings-panel.active {
+    transform: translateX(0);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--primary-color);
+    color: white;
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.close-panel {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.panel-content {
+    padding: 15px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: 10px;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+}
+
+.nav-item i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.nav-item:hover i,
+.nav-item.active i {
+    color: white;
+}
+
+/* Settings Styles */
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group h3 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.setting-group h3 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.setting-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.setting-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setting-buttons .btn {
+    padding: 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+}
+
+/* Switch Toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 28px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Main Container */
+.main-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Top Navigation */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--card-background);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(var(--card-background-rgb), 0.95);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-toggle, .settings-toggle, .home-btn {
+    background: var(--primary-color);
+    border: none;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.2s;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.menu-toggle:hover, .settings-toggle:hover, .home-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Main Content */
+.main-content {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Form Styles */
+#addForm {
+    background: var(--card-background);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Category Select with Add Button */
+.category-select-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.category-select-wrapper select {
+    flex: 1;
+}
+
+.add-category-btn {
+    background: var(--secondary-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 14px;
+    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+
+.add-category-btn:hover {
+    background: #27ae60;
+    transform: translateY(-1px);
+}
+
+/* Season/Episode Input */
+.season-episode-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.season-input, .episode-input {
+    flex: 1;
+    position: relative;
+}
+
+.season-input input, .episode-input input {
+    width: 100%;
+    padding: 14px 14px 14px 100px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.season-input::before {
+    content: "Seasons";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.episode-input::before {
+    content: "Total Episodes/Chapters";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.85rem;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Quick Actions */
+.quick-actions-container {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(var(--primary-color-rgb), 0.05);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.quick-action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.quick-action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.favorite-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.favorite-btn:hover {
+    background: #e67e22;
+    transform: translateY(-1px);
+}
+
+.favorite-btn.active {
+    background: #e67e22;
+}
+
+.completed-btn {
+    background: #2ecc71;
+    color: white;
+}
+
+.completed-btn:hover {
+    background: #27ae60;
+    transform: translateY(-1px);
+}
+
+.completed-btn.active {
+    background: #27ae60;
+}
+
+.quick-action-status {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions .btn {
+    flex: 1;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-success {
+    background: #2ecc71;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .season-episode-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .quick-action-buttons {
+        flex-direction: column;
+    }
+    
+    .quick-action-status {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .top-nav {
+        padding: 12px 15px;
+    }
+    
+    .menu-toggle, .settings-toggle, .home-btn {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    
+    #addForm {
+        padding: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 12px;
+    }
+    
+    .form-actions .btn {
+        padding: 14px;
+    }
+}
+
+/* Button Styles */
+.btn {
+    min-height: 44px;
+    min-width: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* iOS input zoom prevention */
+input, select, textarea {
+    font-size: 16px;
+}
+
+/* Prevent blue tap highlight on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+/* Add to the end of your add.css file */
+
+/* Latest Items Section */
+.latest-items-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title i {
+    color: var(--primary-color);
+}
+
+.view-all-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(var(--primary-color-rgb), 0.1);
+    transition: all 0.2s;
+}
+
+.view-all-link:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.latest-items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.latest-item-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: var(--card-background);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.latest-item-card:hover {
+    transform: translateX(5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.latest-item-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.latest-item-info {
+    flex: 1;
+}
+
+.latest-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.latest-item-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.latest-item-type {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+}
+
+.latest-item-type.anime { background: #3498db; }
+.latest-item-type.series { background: #9b59b6; }
+.latest-item-type.manga { background: #e74c3c; }
+.latest-item-type.manwha { background: #f39c12; }
+.latest-item-type.manhua { background: #1abc9c; }
+
+.latest-item-status {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+}
+
+.latest-item-favorite {
+    color: #f39c12;
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.empty-latest {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-background);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
+.empty-latest i {
+    font-size: 2.5rem;
+    color: var(--border-color);
+    margin-bottom: 15px;
+}
+
+.empty-latest p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .latest-item-card {
+        padding: 12px;
+    }
+    
+    .latest-item-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .latest-item-meta {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}

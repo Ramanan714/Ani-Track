@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Anime & Manga Tracker</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Overlay for side panels -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hamburger Menu Panel -->
+    <div class="side-panel menu-panel" id="menuPanel">
+        <div class="panel-header">
+            <h2>Navigation</h2>
+            <button class="close-panel" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content">
+            <a href="index.html" class="nav-item active">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="add.html" class="nav-item">
+                <i class="fas fa-plus-circle"></i> Add Item
+            </a>
+            <a href="remove.html" class="nav-item">
+                <i class="fas fa-trash"></i> Remove Items
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-star"></i> Favorites
+            </a>
+            <a href="wishlist.html" class="nav-item">
+                <i class="fas fa-bookmark"></i> Wishlist
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i> Profile
+            </a>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="side-panel settings-panel" id="settingsPanel">
+        <div class="panel-header">
+            <h2>Settings</h2>
+            <button class="close-panel" id="closeSettings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content">
+            <div class="setting-group">
+    <h3><i class="fas fa-palette"></i> Theme</h3>
+    <select id="themeSelector" class="setting-select">
+        <option value="system">System Default (Theme0)</option>
+        <option value="light">Light Mode (Theme2)</option>
+        <option value="dark">Dark Mode (Theme1)</option>
+    </select>
+    <div class="theme-preview" style="margin-top: 10px; display: flex; gap: 10px;">
+        <div style="width: 30px; height: 30px; background: #ffffff; border: 1px solid #ddd; border-radius: 8px;" title="Light"></div>
+        <div style="width: 30px; height: 30px; background: #1a1a1a; border: 1px solid #ddd; border-radius: 8px;" title="Dark"></div>
+        <div style="width: 30px; height: 30px; background: linear-gradient(135deg, #fff 50%, #1a1a1a 50%); border: 1px solid #ddd; border-radius: 8px;" title="System"></div>
+    </div>
+</div>
+            
+            <div class="setting-group">
+                <h3><i class="fas fa-database"></i> Data Management</h3>
+                <div class="setting-buttons">
+                    <button id="exportData" class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Export JSON
+                    </button>
+                    <button id="importData" class="btn btn-secondary">
+                        <i class="fas fa-upload"></i> Import JSON
+                    </button>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <h3><i class="fas fa-bell"></i> Notifications</h3>
+                <label class="switch">
+                    <input type="checkbox" id="notificationsToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-group">
+                <button id="resetSettings" class="btn btn-danger">
+                    <i class="fas fa-redo"></i> Reset to Defaults
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="nav-right">
+                <button class="settings-toggle" id="settingsToggle">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Greeting Section -->
+            <section class="greeting-section">
+                <div class="greeting-left">
+                    <div class="profile-avatar">
+                        <img id="avatarImage" src="" alt="Profile">
+                    </div>
+                    <div class="greeting-text">
+                        <h2 id="greetingTime">Good Morning,</h2>
+                        <h1 id="userName">User</h1>
+                        <div class="date-time">
+                            <div id="currentDate"></div>
+                            <div id="currentTime"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="greeting-stats">
+                    <div class="stat-bubble">
+                        <i class="fas fa-play-circle"></i>
+                        <span id="watchingCount">0</span>
+                        <small>Watching</small>
+                    </div>
+                    <div class="stat-bubble">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="completedCount">0</span>
+                        <small>Completed</small>
+                    </div>
+                    <div class="stat-bubble">
+                        <i class="fas fa-star"></i>
+                        <span id="favoritesCount">0</span>
+                        <small>Favorites</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions - Horizontal Scroll -->
+            <section class="quick-actions">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt"></i> Quick Actions
+                </h2>
+                <div class="action-grid">
+                    <a href="add.html" class="action-card add">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>Add Item</h3>
+                        <p>Add new anime, manga, or series</p>
+                    </a>
+                    <a href="remove.html" class="action-card remove">
+                        <i class="fas fa-trash"></i>
+                        <h3>Remove Items</h3>
+                        <p>Delete or edit existing items</p>
+                    </a>
+                    <a href="favorites.html" class="action-card favorites">
+                        <i class="fas fa-star"></i>
+                        <h3>Favorites</h3>
+                        <p>View your favorite items</p>
+                    </a>
+                    <a href="wishlist.html" class="action-card wishlist">
+                        <i class="fas fa-bookmark"></i>
+                        <h3>Wishlist</h3>
+                        <p>Items you plan to watch/read</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Replace the existing filter section and sort dropdown with this updated version -->
+
+<!-- Search and Filter Section -->
+<section class="filter-section">
+    <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" id="mainSearch" placeholder="Search by title...">
+    </div>
+    <!-- Add this inside the filter-section, after the search wrapper -->
+<div class="filter-actions">
+    <button class="clear-filters-btn" id="clearFiltersBtn">
+        <i class="fas fa-eraser"></i> Clear All Filters
+    </button>
+</div>
+    
+    <!-- Category Filter - Capsule Style -->
+    <div class="filter-group">
+        <div class="filter-label">
+            <i class="fas fa-tags"></i> Category
+        </div>
+        <div class="capsule-container" id="categoryCapsules">
+            <button class="capsule active" data-category="all">All</button>
+            <button class="capsule" data-category="anime">Anime</button>
+            <button class="capsule" data-category="series">Series</button>
+            <button class="capsule" data-category="manga">Manga</button>
+            <button class="capsule" data-category="manwha">Manwha</button>
+            <button class="capsule" data-category="manhua">Manhua</button>
+        </div>
+    </div>
+    
+    <!-- Status Filter - Capsule Style -->
+    <div class="filter-group">
+        <div class="filter-label">
+            <i class="fas fa-chart-line"></i> Status
+        </div>
+        <div class="capsule-container" id="statusCapsules">
+            <button class="capsule active" data-status="all">All</button>
+            <button class="capsule" data-status="watching">Watching/Reading</button>
+            <button class="capsule" data-status="completed">Completed</button>
+            <button class="capsule" data-status="plan-to-watch">Wishlist</button>
+            <button class="capsule" data-status="on-hold">On Hold</button>
+            <button class="capsule" data-status="dropped">Dropped</button>
+        </div>
+    </div>
+    
+    <!-- Sort Options - Capsule Style -->
+    <div class="filter-group">
+        <div class="filter-label">
+            <i class="fas fa-sort"></i> Sort By
+        </div>
+        <div class="capsule-container" id="sortCapsules">
+            <button class="capsule active" data-sort="date">Recently Added</button>
+            <button class="capsule" data-sort="name">Alphabetical</button>
+            <button class="capsule" data-sort="status">Status</button>
+            <button class="capsule" data-sort="type">Category</button>
+        </div>
+    </div>
+    <!-- Add this inside the filter-section, after the search wrapper -->
+<div class="filter-actions">
+    <button class="clear-filters-btn" id="clearFiltersBtn">
+        <i class="fas fa-eraser"></i> Clear All Filters
+    </button>
+</div>
+</section>
+
+<!-- Remove the old categories section since we have category filter now -->
+<!-- The categories-section div can be removed or kept as is -->
+
+            <!-- Items Section -->
+            <section class="items-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-history"></i> Recent Items
+                    </h2>
+                    <div class="items-count">
+                        <span id="itemsCount">0</span> items
+                    </div>
+                </div>
+                
+                <div class="items-grid" id="itemsContainer">
+                    <!-- Items will be dynamically loaded here -->
+                </div>
+                
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-film"></i>
+                    <h3>No items yet</h3>
+                    <p>Start by adding your first anime, manga, or series!</p>
+                    <a href="add.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add First Item
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Item</h3>
+                <button class="close-modal" id="closeEditModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editItemId">
+                
+                <div class="form-group">
+                    <label for="editTitle">Title *</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editType">Category *</label>
+                        <select id="editType" required>
+                            <option value="anime">Anime</option>
+                            <option value="series">Series</option>
+                            <option value="manga">Manga</option>
+                            <option value="manwha">Manwha</option>
+                            <option value="manhua">Manhua</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editStatus">Status *</label>
+                        <select id="editStatus" required>
+                            <option value="watching">Watching/Reading</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                            <option value="dropped">Dropped</option>
+                            <option value="plan-to-watch">Plan to Watch</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editProgress">Current Progress</label>
+                    <input type="text" id="editProgress" placeholder="e.g., Chapter 45, Episode 12">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editNotes">Notes</label>
+                    <textarea id="editNotes" rows="3" placeholder="Add your thoughts, reviews, or notes..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" id="deleteItem">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Input for Import -->
+    <input type="file" id="fileImport" accept=".json" style="display: none;">
+
+    <script src="theme.js"></script>
+    <script src="storage.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
