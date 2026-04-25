@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Habit Streak Tracker - Anime & Manga Tracker</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="streak.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Overlay for side panels -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hamburger Menu Panel -->
+    <div class="side-panel menu-panel" id="menuPanel">
+        <div class="panel-header">
+            <h2>Navigation</h2>
+            <button class="close-panel" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="add.html" class="nav-item">
+                <i class="fas fa-plus-circle"></i> Add Item
+            </a>
+            <a href="remove.html" class="nav-item">
+                <i class="fas fa-trash"></i> Remove Items
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <i class="fas fa-star"></i> Favorites
+            </a>
+            <a href="wishlist.html" class="nav-item">
+                <i class="fas fa-bookmark"></i> Wishlist
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="streak.html" class="nav-item active">
+                <i class="fas fa-fire"></i> Habit Streak
+            </a>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="side-panel settings-panel" id="settingsPanel">
+        <div class="panel-header">
+            <h2>Settings</h2>
+            <button class="close-panel" id="closeSettings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content">
+            <div class="setting-group">
+                <h3><i class="fas fa-palette"></i> Theme</h3>
+                <select id="themeSelector" class="setting-select">
+                    <option value="system">System Default</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <h3><i class="fas fa-database"></i> Data Management</h3>
+                <div class="setting-buttons">
+                    <button id="exportData" class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Export JSON
+                    </button>
+                    <button id="importData" class="btn btn-secondary">
+                        <i class="fas fa-upload"></i> Import JSON
+                    </button>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <h3><i class="fas fa-bell"></i> Notifications</h3>
+                <label class="switch">
+                    <input type="checkbox" id="notificationsToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-group">
+                <button id="resetSettings" class="btn btn-danger">
+                    <i class="fas fa-redo"></i> Reset to Defaults
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="index.html" class="home-btn" title="Home">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="settings-toggle" id="settingsToggle">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="greeting-section">
+                    <div class="profile-avatar">
+                        <img id="avatarImage" src="" alt="Profile">
+                    </div>
+                    <div class="greeting-text">
+                        <h2 id="greetingTime">Good Morning,</h2>
+                        <h1 id="userName">User</h1>
+                        <div class="date-time">
+                            <div id="currentDate"></div>
+                            <div id="currentTime"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="page-title">
+                    <h1><i class="fas fa-fire" style="color: #f39c12;"></i> Habit Streak Tracker</h1>
+                    <p>Build consistency, one day at a time 🔥</p>
+                </div>
+            </div>
+            <!-- Warning Note -->
+<div class="warning-note">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>The saved habits are not stored in web storage. They are saved in your localStorage, so be careful when exporting your data. Make sure to export habit data as well.</span>
+</div>
+
+<!-- Sorting Section -->
+<div class="sorting-section">
+    <div class="sorting-label">
+        <i class="fas fa-sort-amount-down"></i> Sort by
+    </div>
+    <div class="sorting-capsules">
+        <button class="sort-capsule active" data-sort="favorites">
+            <i class="fas fa-star"></i> Favorites
+        </button>
+        <button class="sort-capsule" data-sort="name">
+            <i class="fas fa-font"></i> Name
+        </button>
+        <button class="sort-capsule" data-sort="streak">
+            <i class="fas fa-fire"></i> Streak
+        </button>
+        <button class="sort-capsule" data-sort="recent">
+            <i class="fas fa-clock"></i> Recently Added
+        </button>
+    </div>
+</div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalStreakDays">0</span>
+                        <span class="stat-label">Total Streak Days</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="bestStreak">0</span>
+                        <span class="stat-label">Best Streak</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="activeHabits">0</span>
+                        <span class="stat-label">Active Habits</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Habit Button -->
+            <div class="add-habit-container">
+                <button class="add-habit-btn" id="addHabitBtn">
+                    <i class="fas fa-plus"></i> Add New Habit
+                </button>
+            </div>
+
+            <!-- Habits Grid -->
+            <div class="habits-grid" id="habitsContainer">
+                <!-- Habit cards will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-fire"></i>
+                <h3>No habits yet</h3>
+                <p>Start building good habits today!</p>
+                <button class="btn btn-primary" id="emptyAddBtn">
+                    <i class="fas fa-plus"></i> Add Your First Habit
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Habit Modal -->
+<div class="modal" id="habitModal">
+    <div class="modal-content habit-modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Add New Habit</h3>
+            <button class="close-modal" id="closeHabitModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="habitForm">
+            <input type="hidden" id="editHabitId">
+            
+            <div class="form-group">
+                <label for="habitName">Habit Name *</label>
+                <input type="text" id="habitName" required placeholder="e.g., Read 30 mins, Meditate, Exercise">
+            </div>
+            
+            <div class="form-group">
+                <label>Icon</label>
+                <div class="icon-selector-container">
+                    <div class="icon-preview-box" id="iconPreviewBox">
+                        <i class="fas fa-smile" id="iconPreview"></i>
+                    </div>
+                    <div class="icon-input-group">
+                        <input type="text" id="habitIcon" placeholder="fa-book, fa-dumbbell, fa-meditate, etc." value="fa-smile">
+                        <button type="button" class="select-icon-btn" id="selectIconBtn">
+                            <i class="fas fa-icons"></i> Select Icon
+                        </button>
+                    </div>
+                </div>
+                <small class="hint">Click "Select Icon" to choose from a wide variety of icons</small>
+            </div>
+            
+            <div class="form-group">
+                <label>Color</label>
+                <div class="color-grid" id="colorGrid">
+                    <div class="color-option selected" data-color="#3498db" style="background: #3498db;"></div>
+                    <div class="color-option" data-color="#2ecc71" style="background: #2ecc71;"></div>
+                    <div class="color-option" data-color="#e74c3c" style="background: #e74c3c;"></div>
+                    <div class="color-option" data-color="#f39c12" style="background: #f39c12;"></div>
+                    <div class="color-option" data-color="#9b59b6" style="background: #9b59b6;"></div>
+                    <div class="color-option" data-color="#1abc9c" style="background: #1abc9c;"></div>
+                    <div class="color-option" data-color="#e67e22" style="background: #e67e22;"></div>
+                    <div class="color-option" data-color="#34495e" style="background: #34495e;"></div>
+                    <div class="color-option" data-color="#16a085" style="background: #16a085;"></div>
+                    <div class="color-option" data-color="#27ae60" style="background: #27ae60;"></div>
+                    <div class="color-option" data-color="#2980b9" style="background: #2980b9;"></div>
+                    <div class="color-option" data-color="#8e44ad" style="background: #8e44ad;"></div>
+                    <div class="color-option" data-color="#d35400" style="background: #d35400;"></div>
+                    <div class="color-option" data-color="#c0392b" style="background: #c0392b;"></div>
+                    <div class="color-option" data-color="#7f8c8d" style="background: #7f8c8d;"></div>
+                </div>
+                <small class="hint">Click on a color to select it for your habit</small>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Habit
+                </button>
+                <button type="button" class="btn btn-secondary" id="cancelHabitBtn">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Icon Selection Popup -->
+<div class="modal" id="iconPickerModal">
+    <div class="modal-content icon-picker-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-icons"></i> Select an Icon</h3>
+            <button class="close-modal" id="closeIconPicker">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="icon-search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="iconSearch" placeholder="Search icons (e.g., book, heart, star, fire)...">
+            </div>
+            <div class="icon-grid" id="iconGrid">
+                <!-- Icons will be dynamically loaded here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelIconPicker">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Icon Selection Popup -->
+<div class="modal" id="iconPickerModal">
+    <div class="modal-content icon-picker-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-icons"></i> Select an Icon</h3>
+            <button class="close-modal" id="closeIconPicker">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="icon-search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="iconSearch" placeholder="Search icons (e.g., book, heart, star, fire)...">
+            </div>
+            <div class="icon-grid" id="iconGrid">
+                <!-- Icons will be dynamically loaded here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelIconPicker">Cancel</button>
+        </div>
+    </div>
+</div>
+
+    <!-- File Input for Import -->
+    <input type="file" id="fileImport" accept=".json" style="display: none;">
+
+    <script src="theme.js"></script>
+    <script src="storage.js"></script>
+    <script src="streak.js"></script>
+</body>
+</html>
